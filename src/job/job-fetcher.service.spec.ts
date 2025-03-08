@@ -2,6 +2,8 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { JobFetcherService } from './job-fetcher.service';
 import { Provider1Service } from './providers/provider1.service';
 import { Provider2Service } from './providers/provider2.service';
+// import { HttpService } from '@nestjs/axios';
+// import { of } from 'rxjs'; // ✅ Import this
 
 describe('JobFetcherService', () => {
   let jobFetcherService: JobFetcherService;
@@ -12,6 +14,9 @@ describe('JobFetcherService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         JobFetcherService,
+        Provider1Service,
+        Provider2Service,
+
         {
           provide: Provider1Service,
           useValue: { fetchJobs: jest.fn() },

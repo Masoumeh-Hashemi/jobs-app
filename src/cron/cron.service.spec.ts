@@ -14,22 +14,20 @@ describe('JobsCronService', () => {
         { provide: JobService, useValue: { fetchAndStoreJobs: jest.fn() } },
         {
           provide: ConfigService,
-          useValue: { get: jest.fn().mockReturnValue('*/5 * * * *') },
+          useValue: { get: jest.fn().mockReturnValue('* * * * * *') },
         },
       ],
     }).compile();
 
-    jobsCronService = module.get<JobsCronService>(JobsCronService);
-    jobService = module.get<JobService>(JobService);
+    jobsCronService = module.get(JobsCronService);
+    jobService = module.get(JobService);
   });
 
   it('should call fetchAndStoreJobs at the scheduled time', async () => {
+    jest.useFakeTimers();
     jest.spyOn(jobService, 'fetchAndStoreJobs');
-
-    await jobsCronService.onModuleInit();
-
-    jest.advanceTimersByTime(5 * 60 * 1000); // Simulate 5 minutes passing
-
+    jobsCronService.onModuleInit();
+    jest.advanceTimersByTime(5 * 60 * 1000);
     expect(jobService.fetchAndStoreJobs).toHaveBeenCalled();
   });
 });
