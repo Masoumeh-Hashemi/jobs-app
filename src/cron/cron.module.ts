@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { JobsCronService } from './cron.service';
-import { JobModule } from 'src/job/job.module';
+import { JobModule } from '../job/job.module';
 
 @Module({
   imports: [JobModule],
