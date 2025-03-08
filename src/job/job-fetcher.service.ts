@@ -1,7 +1,6 @@
-import { HttpStatus, Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { Provider1Service } from './providers/provider1.service';
 import { Provider2Service } from './providers/provider2.service';
-import { ApiException } from '../common/exceptions/api.exception';
 
 @Injectable()
 export class JobFetcherService {
@@ -20,9 +19,8 @@ export class JobFetcherService {
 
       return jobsByProvider.flat();
     } catch (error) {
-      throw new ApiException(
+      throw new InternalServerErrorException(
         `Failed to fetch jobs: ${error.message}`,
-        HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
   }

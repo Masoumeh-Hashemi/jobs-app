@@ -18,7 +18,7 @@ export class JobStorageService {
         .insert()
         .into(JobOffer)
         .values(jobs)
-        .orIgnore()
+        .orIgnore() // I used orIgnore() to just ignore the duplicate data
         .execute();
     } catch (error) {
       throw new DatabaseException('Failed to save jobs to the database');

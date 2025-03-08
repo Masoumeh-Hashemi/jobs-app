@@ -1,5 +1,8 @@
-import { HttpStatus, Injectable, Logger } from '@nestjs/common';
-import { ApiException } from '../common/exceptions/api.exception';
+import {
+  Injectable,
+  InternalServerErrorException,
+  Logger,
+} from '@nestjs/common';
 
 import { JobFetcherService } from './job-fetcher.service';
 import { JobTransformerService } from './job-transformer.service';
@@ -33,9 +36,8 @@ export class JobService {
       await this.jobStorageService.storeJobs(transformedJobs);
     } catch (error) {
       this.logger.error(`Failed to fetch and store jobs: ${error.message}`);
-      throw new ApiException(
+      throw new InternalServerErrorException(
         `Failed to fetch and store jobs: ${error.message}`,
-        HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
   }

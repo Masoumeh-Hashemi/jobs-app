@@ -3,6 +3,8 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { JobModule } from './job/job.module';
 import { CronModule } from './cron/cron.module';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
 
 @Module({
   imports: [
@@ -16,5 +18,7 @@ import { CronModule } from './cron/cron.module';
     JobModule,
     CronModule,
   ],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}

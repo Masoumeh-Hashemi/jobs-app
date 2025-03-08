@@ -1,7 +1,6 @@
-import { HttpStatus, Injectable } from '@nestjs/common';
+import { BadGatewayException, Injectable } from '@nestjs/common';
 import { firstValueFrom } from 'rxjs';
 import { HttpService } from '@nestjs/axios';
-import { ApiException } from '../../common/exceptions/api.exception';
 
 @Injectable()
 export class Provider1Service {
@@ -12,12 +11,9 @@ export class Provider1Service {
   async fetchJobs(): Promise<any[]> {
     try {
       const response = await firstValueFrom(this.httpService.get(this.apiUrl));
-      return response.data.jobs; // API 1 returns jobs in 'jobs' array
+      return response.data.jobs;
     } catch (error) {
-      throw new ApiException(
-        'Failed to fetch jobs from Provider1',
-        HttpStatus.BAD_GATEWAY,
-      );
+      throw new BadGatewayException('Failed to fetch jobs from Provider1');
     }
   }
 }

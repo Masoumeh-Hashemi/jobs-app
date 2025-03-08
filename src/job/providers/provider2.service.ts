@@ -1,7 +1,10 @@
-import { HttpStatus, Injectable } from '@nestjs/common';
+import {
+  BadGatewayException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { firstValueFrom } from 'rxjs';
-import { ApiException } from '../../common/exceptions/api.exception';
 
 @Injectable()
 export class Provider2Service {
@@ -16,7 +19,7 @@ export class Provider2Service {
       const jobsList = response.data.data?.jobsList;
 
       if (!jobsList) {
-        throw new ApiException('No jobs found', HttpStatus.NOT_FOUND);
+        throw new NotFoundException(`no job not found`);
       }
 
       const jobs2 = jobsList
@@ -28,10 +31,7 @@ export class Provider2Service {
 
       return jobs2;
     } catch (error) {
-      throw new ApiException(
-        'Failed to fetch jobs from Provider2',
-        HttpStatus.BAD_GATEWAY,
-      );
+      throw new BadGatewayException('Failed to fetch jobs from Provider2');
     }
   }
 }
